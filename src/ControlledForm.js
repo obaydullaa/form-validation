@@ -62,8 +62,8 @@ export default function ControlledForm() {
                 userError.userName = 'User Name is Required'
             }
         
-        
-        if(email === '' ){
+        const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(email === '' || !regexEmail.test(email)){
                 isError = true;
                 userError.email = 'Email is Required and must be valid'
             }
