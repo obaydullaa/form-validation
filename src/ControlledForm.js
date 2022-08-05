@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 export default function ControlledForm() {
-    const initialData  = {
+    const initialData = {
         fullName: '',
         userName: '',
         email: '',
@@ -13,7 +13,16 @@ export default function ControlledForm() {
         webUrl: '',
     }
 
-    const [userData, setUserData] = useState(initialData);
+    const [userData, setUserData] = useState(initialData)
+    const [errors, setErrors] = useState({
+        fullName: '',
+        userName: '',
+        email: '',
+        bdNumber: '',
+        password: '',
+        confirmPassword: ''
+    })
+    const [submitted, setSubmitted] = useState(false)
 
     const handleChange = (evt) => {
         // console.log(evt.target.name, evt.target.value)
@@ -21,12 +30,63 @@ export default function ControlledForm() {
             ...userData,
             [evt.target.name]: evt.target.value,
         })
+
+        setErrors({
+            ...errors,
+            [evt.target.name]: '',
+        })
     }
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
+        const {fullName, userName, email, bdNumber, password, confirmPassword } = userData;
+        
+        const userError = {
+            fullName: '',
+            userName: '',
+            email: '',
+            bdNumber: '',
+            password: '',
+            confirmPassword: '',
+        }
+
+        let isError = false;
+        
+        if(fullName === ''){
+                isError = true;
+                userError.fullName = 'Full Name is Required';
+            }
+        
+        if(userName === ''){
+                isError = true;
+                userError.userName = 'User Name is Required'
+            }
+        
+        
+        if(email === '' ){
+                isError = true;
+                userError.email = 'Email is Required and must be valid'
+            }
+            
+        if(bdNumber === ''){
+                isError = true;
+                userError.bdNumber = 'Number is Required'
+            }
+       
+        if(password === '' && !password.strongRegex){
+                isError = true;
+                userError.password = 'Password is Required'
+            }
+        if(confirmPassword === ''){
+                isError = true;
+                userError.confirmPassword = 'Confirm Password is Required'
+            }
+            setErrors(userError)
+
+        if(isError) return;
+        setSubmitted(true)
     }
-     
+     console.log(submitted)
     const {
             fullName, 
             userName, 
@@ -37,21 +97,26 @@ export default function ControlledForm() {
             webSlug,
             webUrl
         } = userData;
+
   return (
     <div className='container' style={{width: 600, margin:'50pz auto'}}>
         
      <h2>Controlled Form React Form Validation</h2>
+     {submitted && (<h2>Form Submit Successfully</h2>)}
      <br/>
-
-        <form onSubmit={handleSubmit}>
+    {!submitted && (<form onSubmit={handleSubmit}>
             <div>
-                <input type="text"
+               <div>
+               <input type="text"
                     placeholder='Full Name*'
                     name='fullName'
                     id='fullName'
                     value={fullName}
                     onChange={handleChange}
                 />
+               </div>
+                <p style={{color: 'red'}}>{errors.fullName}</p>
+                <div>
                 <input type="text"
                     placeholder='User Name*'
                     name='userName'
@@ -59,6 +124,8 @@ export default function ControlledForm() {
                     value={userName}
                     onChange={handleChange}
                 />
+                </div>
+                <p style={{color: 'red'}}>{errors.userName}</p>
             </div>
             <br/>
 
@@ -70,6 +137,7 @@ export default function ControlledForm() {
                     value={email}
                     onChange={handleChange}
                 />
+                <p style={{color: 'red'}}>{errors.email}</p>
                 <input type="number"
                     placeholder='Bd Number*'
                     name='bdNumber'
@@ -77,6 +145,7 @@ export default function ControlledForm() {
                     value={bdNumber}
                     onChange={handleChange}
                 />
+                <p style={{color: 'red'}}>{errors.bdNumber}</p>
             </div>
             <br/>
 
@@ -88,6 +157,7 @@ export default function ControlledForm() {
                     value={password}
                     onChange={handleChange}
                 />
+                <p style={{color: 'red'}}>{errors.password}</p>
                 <input type="password"
                     placeholder='Confirm Password*'
                     name='confirmPassword'
@@ -95,6 +165,7 @@ export default function ControlledForm() {
                     value={confirmPassword}
                     onChange={handleChange}
                 />
+                <p style={{color: 'red'}}>{errors.confirmPassword}</p>
             </div>
             <br/>
 
@@ -106,6 +177,7 @@ export default function ControlledForm() {
                     value={webUrl}
                     onChange={handleChange}
                 />
+                {/* <p style={{color: 'red'}}>{errors.webUrl}</p> */}
                 <input type="text"
                     placeholder='Slug*'
                     name='webSlug'
@@ -113,12 +185,12 @@ export default function ControlledForm() {
                     value={webSlug}
                     onChange={handleChange}
                 />
+                {/* <p style={{color: 'red'}}>{errors.webSlug}</p> */}
             </div>
             <br/>
             <br/>
             <button type='submit' value='submit'>Submit</button>
-        </form>
-
+        </form>)}
     </div>
   )
 }
