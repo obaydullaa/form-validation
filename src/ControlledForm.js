@@ -20,7 +20,8 @@ export default function ControlledForm() {
         email: '',
         bdNumber: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        webUrl: '',
     })
     const [submitted, setSubmitted] = useState(false)
 
@@ -39,7 +40,7 @@ export default function ControlledForm() {
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
-        const {fullName, userName, email, bdNumber, password, confirmPassword } = userData;
+        const {fullName, userName, email, bdNumber, password, confirmPassword, webUrl } = userData;
         
         const userError = {
             fullName: '',
@@ -67,10 +68,12 @@ export default function ControlledForm() {
                 isError = true;
                 userError.email = 'Email is Required and must be valid'
             }
+
+            const bdPhoneNum = /(^(\+8801|8801|01|008801))[1|3-9]{1}(\d){8}$/
             
-        if(bdNumber === ''){
+        if(bdNumber === '' || !bdPhoneNum.test(bdNumber)){
                 isError = true;
-                userError.bdNumber = 'Number is Required'
+                userError.bdNumber = 'Bangladeshi Number is Required'
             }
             // const decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
             // console.log(!password.match(decimal))
@@ -87,7 +90,17 @@ export default function ControlledForm() {
 
             if( confirmPassword === '' || password !== confirmPassword){
                 isError = true;
-                userError.confirmPassword = 'Confirm Password is Required'
+                userError.confirmPassword = 'Please Confirm your Password'
+            }
+            // const regexWebUrl = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'); 
+            function urlPatternValidation(weburl){
+                const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
+                return regex.test(weburl);
+              };
+
+            if( webUrl === '' || urlPatternValidation(password)){
+                isError = true;
+                userError.webUrl = 'Please Valid URL'
             }
 
             setErrors(userError)
@@ -188,9 +201,9 @@ export default function ControlledForm() {
                     value={webUrl}
                     onChange={handleChange}
                 />
-                {/* <p style={{color: 'red'}}>{errors.webUrl}</p> */}
+                <p style={{color: 'red'}}>{errors.webUrl}</p>
                 <input type="text"
-                    placeholder='Slug*'
+                    placeholder='Slug'
                     name='webSlug'
                     id='webSlug'
                     value={webSlug}
