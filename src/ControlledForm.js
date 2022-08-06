@@ -72,8 +72,9 @@ export default function ControlledForm() {
                 isError = true;
                 userError.bdNumber = 'Number is Required'
             }
-       
-        if(password === '' && !password.strongRegex){
+            const decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+            console.log(!password.match(decimal))
+        if(password === '' && password.match(decimal)){
                 isError = true;
                 userError.password = 'Password is Required'
             }
@@ -86,7 +87,7 @@ export default function ControlledForm() {
         if(isError) return;
         setSubmitted(true)
     }
-     console.log(submitted)
+
     const {
             fullName, 
             userName, 
