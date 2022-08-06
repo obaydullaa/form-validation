@@ -77,18 +77,19 @@ export default function ControlledForm() {
             // function password_validate(p) {
             //     return /[A-Z]/.test(p) && /[0-9]/.test(p) && !/[aeiou]/.test(p) && /^[@#][A-Za-z0-9]{7,13}$/.test(p);
             // }
-            
+
           const regPassword =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
         if(password === '' || !regPassword.test(password)){
                 isError = true;
-                userError.password = 'Password is Required & must be valid'
-
+                userError.password = 'Password is Required & must be valid';
             }
-        if(confirmPassword === ''){
+
+            if( confirmPassword === '' || password !== confirmPassword){
                 isError = true;
                 userError.confirmPassword = 'Confirm Password is Required'
             }
+
             setErrors(userError)
 
         if(isError) return;
