@@ -11,6 +11,8 @@ export default function ControlledForm() {
         confirmPassword: '',
         webSlug: '',
         webUrl: '',
+        profession: '',
+        gender: 'male',
     }
 
     const [userData, setUserData] = useState(initialData)
@@ -22,6 +24,7 @@ export default function ControlledForm() {
         password: '',
         confirmPassword: '',
         webUrl: '',
+        profession: '',
     })
     const [submitted, setSubmitted] = useState(false)
 
@@ -40,7 +43,7 @@ export default function ControlledForm() {
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
-        const {fullName, userName, email, bdNumber, password, confirmPassword, webUrl } = userData;
+        const {fullName, userName, email, bdNumber, password, confirmPassword, webUrl, profession } = userData;
         
         const userError = {
             fullName: '',
@@ -102,6 +105,10 @@ export default function ControlledForm() {
                 isError = true;
                 userError.webUrl = 'Please Valid URL'
             }
+            if( profession === '' ){
+                isError = true;
+                userError.profession = 'Profession is Required'
+            }
 
             setErrors(userError)
 
@@ -117,10 +124,10 @@ export default function ControlledForm() {
             password, 
             confirmPassword,
             webSlug,
-            webUrl
+            webUrl,
+            profession,
+            gender,
         } = userData;
-
-       
 
   return (
     <div className='container' style={{width: 600, margin:'50pz auto'}}>
@@ -210,6 +217,42 @@ export default function ControlledForm() {
                     onChange={handleChange}
                 />
                 {/* <p style={{color: 'red'}}>{errors.webSlug}</p> */}
+            </div>
+            <div>
+                <select 
+                name="profession" 
+                id="profession"
+                onChange={handleChange}
+                value={profession}
+                >
+                    <option value="" disabled>Select Option</option>
+                    <option value="reactDeveloper">React js Developer</option>
+                    <option value="vueDeveloper">Vue js Developer</option>
+                    <option value="mernDeveloper">MERN Stack Developer</option>
+                    <option value="wpDeveloper">Wordpress Developer</option>
+                </select>
+                <p style={{color: 'red'}}>{errors.profession}</p>
+                <div>
+                    <input type="radio"
+                        name='gender' 
+                        id='gender' 
+                        value='male' 
+                        id='male' 
+                        checked={gender === 'male'}
+                        onChange={handleChange}
+                        />
+                    <label htmlFor="male"> Male </label>
+                    
+                    <input type="radio"
+                        name='gender'
+                        value='female' 
+                        id='female' 
+                        checked={gender === 'female'}
+                        onChange={handleChange}
+                        />
+                    <label htmlFor="female">Female</label>
+                    
+                </div>
             </div>
             <br/>
             <br/>
