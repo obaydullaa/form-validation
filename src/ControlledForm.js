@@ -72,11 +72,18 @@ export default function ControlledForm() {
                 isError = true;
                 userError.bdNumber = 'Number is Required'
             }
-            const decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-            console.log(!password.match(decimal))
-        if(password === '' && password.match(decimal)){
+            // const decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+            // console.log(!password.match(decimal))
+            // function password_validate(p) {
+            //     return /[A-Z]/.test(p) && /[0-9]/.test(p) && !/[aeiou]/.test(p) && /^[@#][A-Za-z0-9]{7,13}$/.test(p);
+            // }
+            
+          const regPassword =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+
+        if(password === '' || !regPassword.test(password)){
                 isError = true;
-                userError.password = 'Password is Required'
+                userError.password = 'Password is Required & must be valid'
+
             }
         if(confirmPassword === ''){
                 isError = true;
@@ -98,6 +105,8 @@ export default function ControlledForm() {
             webSlug,
             webUrl
         } = userData;
+
+       
 
   return (
     <div className='container' style={{width: 600, margin:'50pz auto'}}>
