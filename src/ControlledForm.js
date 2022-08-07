@@ -245,7 +245,6 @@ export default function ControlledForm() {
                     <div className='singleRadio'>
                         <input type="radio"
                         name='gender' 
-                        id='gender' 
                         value='male' 
                         id='male' 
                         checked={gender === 'male'}
