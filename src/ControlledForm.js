@@ -88,7 +88,8 @@ export default function ControlledForm() {
 
         if(password === '' || !regPassword.test(password)){
                 isError = true;
-                userError.password = 'Password is Required & must be valid';
+                // userError.password = 'Password is Required & must be valid';
+                userError.password = 'At least 8 characters, start a-z then A-Z, then 0-9 & special character';
             }
 
             if( confirmPassword === '' || password !== confirmPassword){
@@ -130,95 +131,100 @@ export default function ControlledForm() {
         } = userData;
 
   return (
-    <div className='container' style={{width: 600, margin:'50pz auto'}}>
+    <div className='container'>
         
-     <h2>Controlled Form React Form Validation</h2>
-     {submitted && (<h2>Form Submit Successfully</h2>)}
-     <br/>
-    {!submitted && (<form onSubmit={handleSubmit}>
-            <div>
-               <div>
-               <input type="text"
-                    placeholder='Full Name*'
-                    name='fullName'
-                    id='fullName'
-                    value={fullName}
-                    onChange={handleChange}
-                />
-               </div>
-                <p style={{color: 'red'}}>{errors.fullName}</p>
-                <div>
+        <h2 className='formHeading'>React Control Form Validation</h2>
+        {submitted && (<h2>Form Submit Successfully</h2>)}
+        <br/>
+        {!submitted && 
+        (<form onSubmit={handleSubmit}>
+            <fieldset>
                 <input type="text"
-                    placeholder='User Name*'
-                    name='userName'
-                    id='userName'
-                    value={userName}
-                    onChange={handleChange}
+                placeholder='Full Name*'
+                name='fullName'
+                id='fullName'
+                value={fullName}
+                onChange={handleChange}
                 />
-                </div>
-                <p style={{color: 'red'}}>{errors.userName}</p>
-            </div>
-            <br/>
+                <p style={{color: 'red'}}>{errors.fullName}</p>
+            </fieldset>
 
-            <div>
+            <fieldset>
+                <input type="text"
+                placeholder='User Name*'
+                name='userName'
+                id='userName'
+                value={userName}
+                onChange={handleChange}
+                />
+                <p style={{color: 'red'}}>{errors.userName}</p>
+            </fieldset>
+
+            <fieldset>
                 <input type="email"
-                    placeholder='Email*'
-                    name='email'
-                    id='email'
-                    value={email}
-                    onChange={handleChange}
+                placeholder='Email*'
+                name='email'
+                id='email'
+                value={email}
+                onChange={handleChange}
                 />
                 <p style={{color: 'red'}}>{errors.email}</p>
+            </fieldset>
+
+            <fieldset>
                 <input type="number"
-                    placeholder='Bd Number*'
-                    name='bdNumber'
-                    id='bdNumber'
-                    value={bdNumber}
-                    onChange={handleChange}
+                placeholder='Bd Number*'
+                name='bdNumber'
+                id='bdNumber'
+                value={bdNumber}
+                onChange={handleChange}
                 />
                 <p style={{color: 'red'}}>{errors.bdNumber}</p>
-            </div>
-            <br/>
+            </fieldset>
 
-            <div>
+            <fieldset>
                 <input type="password"
-                    placeholder='Password*'
-                    name='password'
-                    id='password'
-                    value={password}
-                    onChange={handleChange}
+                placeholder='Password*'
+                name='password'
+                id='password'
+                value={password}
+                onChange={handleChange}
                 />
                 <p style={{color: 'red'}}>{errors.password}</p>
+            </fieldset>   
+
+            <fieldset>
                 <input type="password"
-                    placeholder='Confirm Password*'
-                    name='confirmPassword'
-                    id='confirmPassword'
-                    value={confirmPassword}
-                    onChange={handleChange}
+                placeholder='Confirm Password*'
+                name='confirmPassword'
+                id='confirmPassword'
+                value={confirmPassword}
+                onChange={handleChange}
                 />
                 <p style={{color: 'red'}}>{errors.confirmPassword}</p>
-            </div>
-            <br/>
+            </fieldset>  
 
-            <div>
+            <fieldset>
                 <input type="url"
-                    placeholder='Website URL*'
-                    name='webUrl'
-                    id='webUrl'
-                    value={webUrl}
-                    onChange={handleChange}
+                placeholder='Website URL*'
+                name='webUrl'
+                id='webUrl'
+                value={webUrl}
+                onChange={handleChange}
                 />
                 <p style={{color: 'red'}}>{errors.webUrl}</p>
+            </fieldset>
+            <fieldset>
                 <input type="text"
-                    placeholder='Slug'
-                    name='webSlug'
-                    id='webSlug'
-                    value={webSlug}
-                    onChange={handleChange}
-                />
-                {/* <p style={{color: 'red'}}>{errors.webSlug}</p> */}
-            </div>
-            <div>
+                placeholder='Slug'
+                name='webSlug'
+                id='webSlug'
+                value={webSlug}
+                onChange={handleChange}
+                />    
+            </fieldset>  
+                
+            <fieldset>
                 <select 
                 name="profession" 
                 id="profession"
@@ -232,8 +238,12 @@ export default function ControlledForm() {
                     <option value="wpDeveloper">Wordpress Developer</option>
                 </select>
                 <p style={{color: 'red'}}>{errors.profession}</p>
-                <div>
-                    <input type="radio"
+            </fieldset>
+            
+            <fieldset>
+                <div className='radioBtnWrap'>
+                    <div className='singleRadio'>
+                        <input type="radio"
                         name='gender' 
                         id='gender' 
                         value='male' 
@@ -241,8 +251,10 @@ export default function ControlledForm() {
                         checked={gender === 'male'}
                         onChange={handleChange}
                         />
-                    <label htmlFor="male"> Male </label>
-                    
+                        <label htmlFor="male"> Male </label>
+                    </div>
+                                
+                <div className='singleRadio'>
                     <input type="radio"
                         name='gender'
                         value='female' 
@@ -250,13 +262,13 @@ export default function ControlledForm() {
                         checked={gender === 'female'}
                         onChange={handleChange}
                         />
-                    <label htmlFor="female">Female</label>
-                    
+                        <label htmlFor="female">Female</label>
                 </div>
+                </div>
+            </fieldset>
+            <div className="button-wrap">
+                <button className='submitBtn' type='submit' value='submit'>Submit</button>
             </div>
-            <br/>
-            <br/>
-            <button type='submit' value='submit'>Submit</button>
         </form>)}
     </div>
   )
